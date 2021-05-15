@@ -1,48 +1,34 @@
-song = "";
-var left_wrist_x;
-var right_wrist_x;
-var right_wrist_y;
+var song = "";
 var left_wrist_y;
-function preload(){
+var right_wrist_y
 
-    song=loadSound("music.mp3");
-
-};
-
-function draw(){
-image(video ,0 ,0 ,500 ,450 );
-fill("#d60909");
-stroke("#d60909");
-circle(left_wrist_x,left_wrist_y,20);
-var number_leftWristY=Number(left_wrist_y);
-var removeDecimal=floor(number_leftWristY*2);
-volume=removeDecimal/1000;
-console.log(volume);
-
-song.setVolume(volume);
+function preaload(){
+song=loadSong("poct.mp3")
 };
 function setup(){
-Canvas=createCanvas(500 ,450);
-Canvas.position(555 ,250)
-video=createCapture(VIDEO)
+Canvas=createCanvas(550,500);
+Canvas.position(540,250);
+video=createCapture(VIDEO);
 video.hide();
 poseNet=ml5.poseNet(video,modelloaded);
-poseNet.on("pose",gotPoses);
+  poseNet.on("pose",gotPoses);
+};
+function draw(){
+    image(video, 0,0,550,500);
 };
 function modelloaded(){
-console.log("Model is loaded");
-};
-function gotPoses(results){
-    if(results.length > 0){
-console.log(results);
-left_wrist_x=results[0].pose.leftWrist.x;
-right_wrist_x=results[0].pose.rightWrist.x;
-left_wrist_y=results[0].pose.leftWrist.y;
-right_wrist_y=results[0].pose.rightWrist.y;
-song.play();
-    song.setVolume(0.2);
-    song.rate(1);
+    console.log("Model is loaded");
     };
-};
-
     
+    function gotPoses(results){
+        if(results.length > 0){
+    console.log(results);
+    left_wrist_y=results[0].pose.leftWrist.y;
+    right_wrist_y=results[0].pose.rightWrist.y;
+        };      
+    if(left_wrist_y < 500 && left_wrist_y > 100){
+        song.play();
+        song.setVolume(1);
+        song.rate(1);
+    };
+    };
